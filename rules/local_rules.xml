@@ -1,0 +1,178 @@
+<!--
+  Custom EC2 Endpoint Rules with MITRE ATT&CK 
+-->
+
+<group name="syscheck,pci_dss_11.5,gpg13_4.11,gdpr_II_5.1.f,hipaa_164.312.c.1,nist_800_53_SI.7,">
+
+  <!-- ============================================ -->
+  <!-- Persistence - T1543 (Create/Modify System Process) -->
+  <!-- ============================================ -->
+  
+  <rule id="100550" level="12">
+    <if_sid>550</if_sid>
+    <field name="file">/etc/systemd/system|/etc/init.d</field>
+    <description>System service file created/modified - Possible persistence mechanism</description>
+    <mitre>
+      <id>T1543.002</id>
+    </mitre>
+    <group>fim,persistence,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Credential Access - T1003 (OS Credential Dumping) -->
+  <!-- ============================================ -->
+  
+  <rule id="100551" level="15">
+    <if_sid>550</if_sid>
+    <field name="file">/etc/shadow|/etc/passwd</field>
+    <description>Critical credential file accessed - Possible credential dumping</description>
+    <mitre>
+      <id>T1003.008</id>
+    </mitre>
+    <group>fim,credential_access,mitre_attack,pci_dss_10.2.7</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Defense Evasion - T1070 (Indicator Removal) -->
+  <!-- ============================================ -->
+  
+  <rule id="100552" level="10">
+    <if_sid>550</if_sid>
+    <field name="file">/var/log/auth.log|/var/log/secure</field>
+    <description>Log file modified/deleted - Possible log tampering</description>
+    <mitre>
+      <id>T1070.002</id>
+    </mitre>
+    <group>fim,defense_evasion,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Privilege Escalation - T1548 (Abuse Elevation Control) -->
+  <!-- ============================================ -->
+  
+  <rule id="100553" level="12">
+    <if_sid>550</if_sid>
+    <field name="file">/etc/sudoers|/etc/sudoers.d</field>
+    <description>Sudo configuration modified - Possible privilege escalation</description>
+    <mitre>
+      <id>T1548.003</id>
+    </mitre>
+    <group>fim,privilege_escalation,mitre_attack,gdpr_IV_35.7.d</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Execution - T1059 (Command and Scripting) -->
+  <!-- ============================================ -->
+  
+  <rule id="100554" level="8">
+    <if_sid>550</if_sid>
+    <field name="file">\.sh$|\.py$|\.pl$</field>
+    <match>/bin/|/sbin/|/usr/bin/|/usr/sbin/</match>
+    <description>Script file created in system directory - Possible malicious execution</description>
+    <mitre>
+      <id>T1059.004</id>
+    </mitre>
+    <group>fim,execution,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Backdoor Detection - T1505 (Server Software Component) -->
+  <!-- ============================================ -->
+  
+  <rule id="100555" level="15">
+    <if_sid>550</if_sid>
+    <field name="file">/root/.ssh/authorized_keys</field>
+    <description>SSH authorized_keys modified - Possible backdoor access</description>
+    <mitre>
+      <id>T1098.004</id>
+    </mitre>
+    <group>fim,persistence,backdoor,mitre_attack</group>
+  </rule>
+
+</group>
+
+<!-- SSH Login Rules with MITRE -->
+<group name="syslog,sshd,">
+
+  <!-- ============================================ -->
+  <!-- Initial Access - T1078 (Valid Accounts) -->
+  <!-- ============================================ -->
+  
+  <rule id="100560" level="5">
+    <if_sid>5501</if_sid>
+    <description>SSH successful login - Valid account usage</description>
+    <mitre>
+      <id>T1078.003</id>
+    </mitre>
+    <group>authentication_success,pci_dss_10.2.5,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Credential Access - T1110 (Brute Force) -->
+  <!-- ============================================ -->
+  
+  <rule id="100561" level="10" frequency="5" timeframe="300">
+    <if_matched_sid>5503</if_matched_sid>
+    <description>Multiple SSH authentication failures - Possible brute force</description>
+    <mitre>
+      <id>T1110.001</id>
+    </mitre>
+    <group>authentication_failures,brute_force,mitre_attack,pci_dss_11.4</group>
+  </rule>
+
+  <!-- Root Login Detection -->
+  <rule id="100562" level="8">
+    <if_sid>5501</if_sid>
+    <user>root</user>
+    <description>SSH root login detected - High privilege account</description>
+    <mitre>
+      <id>T1078.003</id>
+    </mitre>
+    <group>authentication_success,privileged_account,mitre_attack</group>
+  </rule>
+
+</group>
+
+<!-- Process/Command Monitoring -->
+<group name="local,syslog,">
+
+  <!-- ============================================ -->
+  <!-- Discovery - T1082 (System Information Discovery) -->
+  <!-- ============================================ -->
+  
+  <rule id="100570" level="3">
+    <match>uname -a|lsb_release|hostnamectl</match>
+    <description>System information discovery command executed</description>
+    <mitre>
+      <id>T1082</id>
+    </mitre>
+    <group>recon,discovery,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Discovery - T1016 (System Network Configuration) -->
+  <!-- ============================================ -->
+  
+  <rule id="100571" level="3">
+    <match>ifconfig|ip addr|route|iptables -L</match>
+    <description>Network configuration discovery</description>
+    <mitre>
+      <id>T1016</id>
+    </mitre>
+    <group>recon,discovery,mitre_attack</group>
+  </rule>
+
+  <!-- ============================================ -->
+  <!-- Credential Access - T1003 (Credential Dumping) -->
+  <!-- ============================================ -->
+  
+  <rule id="100572" level="12">
+    <match>mimikatz|gsecdump|pwdump|fgdump</match>
+    <description>Credential dumping tool detected</description>
+    <mitre>
+      <id>T1003</id>
+    </mitre>
+    <group>credential_access,mitre_attack</group>
+  </rule>
+
+</group>

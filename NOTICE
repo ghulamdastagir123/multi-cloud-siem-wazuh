@@ -1,0 +1,64 @@
+Multi-Cloud SIEM with Wazuh
+Copyright 2025 Ghulam Dastagir
+
+This product includes software developed by Ghulam Dastagir
+as part of the Multi-Cloud SIEM Implementation project.
+
+Original Repository: https://github.com/ghulamdastagir123/multi-cloud-siem-wazuh
+Development Period: August 2025 - November 2025
+Location: Karachi, Pakistan
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this software except in compliance with the License.
+You may obtain a copy of the License at:
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+================================================================================
+
+THIRD-PARTY SOFTWARE NOTICES:
+
+This project uses the following open-source software:
+
+1. Wazuh (https://github.com/wazuh/wazuh)
+   License: GPLv2
+   Copyright: Wazuh, Inc.
+
+2. OpenSearch (https://github.com/opensearch-project/OpenSearch)
+   License: Apache 2.0
+   Copyright: Amazon.com, Inc. or its affiliates
+
+3. Docker (https://github.com/docker/docker)
+   License: Apache 2.0
+   Copyright: Docker, Inc.
+
+For complete license information, see the LICENSE file.
+
+================================================================================
+
+ATTRIBUTION REQUIREMENT:
+
+If you use, modify, or distribute this work, you MUST:
+
+1. Retain this NOTICE file
+2. Retain all copyright notices
+3. Provide attribution to the original author
+4. Include a copy of the Apache License 2.0
+5. State any changes you made
+
+Example attribution:
+"Based on Multi-Cloud SIEM by Ghulam Dastagir
+https://github.com/ghulamdastagir123/multi-cloud-siem-wazuh"
+
+================================================================================
+
+For questions or contact:
+Ghulam Dastagir
+LinkedIn: https://linkedin.com/in/ghulamdastagir-netsec/
+Email: dastagir.kh79@gmail.com

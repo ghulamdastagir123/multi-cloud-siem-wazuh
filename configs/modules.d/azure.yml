@@ -1,0 +1,14 @@
+- module: azure
+  activitylogs:
+    enabled: true
+    var.eventhub: "${AZURE_EVENTHUB_NAME}"
+    var.consumer_group: "${AZURE_CONSUMER_GROUP}"
+    var.connection_string: "${AZURE_CONNECTION_STRING}"
+    var.storage_account: "${AZURE_STORAGE_ACCOUNT}"
+    var.storage_account_key: "${AZURE_STORAGE_ACCOUNT_KEY}"
+
+  signinlogs:
+    enabled: false
+
+  auditlogs:
+    enabled: false

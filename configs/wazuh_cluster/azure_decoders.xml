@@ -1,0 +1,12 @@
+######################--------------Azure Decoders----------######################
+
+
+<decoder name="azure-filebeat">
+  <program_name>azure-filebeat</program_name>
+</decoder>
+
+<decoder name="azure-json">
+  <parent>azure-filebeat</parent>
+  <plugin_decoder>JSON_Decoder</plugin_decoder>
+</decoder>
+
